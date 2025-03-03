@@ -1,5 +1,6 @@
 example/.env
 example/tmp/build-errors.log
 example/tmp/main
+example/tmp/
 models/error.
 tmp/main
