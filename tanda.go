@@ -132,86 +132,58 @@ func (t *Tanda) MerchantToCustomer(body models.PaymentRequest) (*models.PaymentR
 	url := t.baseURL() + "/v3/organizations/" + t.OrganizationId + "/request"
 
 	if body.CommandId == models.CustomerToMerchantMobileMoneyPayment {
-		body.Request = append(body.Request,
-			models.PaymentField{ID: "amount", Value: body.Amount, Label: "Amount"},
-			models.PaymentField{ID: "narration", Value: body.Narration, Label: "Narration"},
-			models.PaymentField{ID: "ipnUrl", Value: body.CallBackUrl, Label: "Notification URL"},
-			models.PaymentField{
-				ID:    "shortCode",
-				Value: body.ShortCode,
-				Label: "Short code",
-			}, models.PaymentField{
-				ID:    "accountNumber",
-				Value: body.AccountNumber,
-				Label: "Phone number",
-			})
-
+		req := []models.PaymentField{
+			{ID: "amount", Value: body.Amount, Label: "Amount"},
+			{ID: "narration", Value: body.Narration, Label: "Narration"},
+			{ID: "ipnUrl", Value: body.CallBackUrl, Label: "Notification URL"},
+			{ID: "shortCode", Value: body.ShortCode, Label: "Short code"},
+			{ID: "accountNumber", Value: body.AccountNumber, Label: "Phone number"},
+		}
+		body.Request = req
 	}
 	if body.CommandId == models.MerchantTo3rdPartyMerchantPayment {
-		body.Request = append(body.Request,
-			models.PaymentField{ID: "amount", Value: body.Amount, Label: "Amount"},
-			models.PaymentField{ID: "narration", Value: body.Narration, Label: "Narration"},
-			models.PaymentField{ID: "ipnUrl", Value: body.CallBackUrl, Label: "Notification URL"},
-			models.PaymentField{
-				ID:    "partyA",
-				Value: body.ShortCode,
-				Label: "Short code",
-			}, models.PaymentField{
-				ID:    "partyB",
-				Value: body.AccountNumber,
-				Label: "Till",
-			})
+		req := []models.PaymentField{
+			{ID: "amount", Value: body.Amount, Label: "Amount"},
+			{ID: "narration", Value: body.Narration, Label: "Narration"},
+			{ID: "ipnUrl", Value: body.CallBackUrl, Label: "Notification URL"},
+			{ID: "partyA", Value: body.ShortCode, Label: "Short code"},
+			{ID: "partyB", Value: body.AccountNumber, Label: "Till"},
+		}
+		body.Request = req
 	}
 	if body.CommandId == models.MerchantTo3rdPartyBusinessPayment {
 		req := []models.PaymentField{
-			models.PaymentField{ID: "amount", Value: body.Amount, Label: "Amount"},
-			models.PaymentField{ID: "narration", Value: body.Narration, Label: "Narration"},
-			models.PaymentField{ID: "ipnUrl", Value: body.CallBackUrl, Label: "Notification URL"},
-			models.PaymentField{
-				ID:    "shortCode",
-				Value: body.ShortCode,
-				Label: "Short code",
-			},
-			models.PaymentField{
-				ID:    "businessNumber",
-				Value: body.AccountNumber,
-				Label: "Business number",
-			},
-			models.PaymentField{
-				ID:    "accountReference",
-				Value: body.AccountNumberRef,
-				Label: "Account Reference",
-			},
+			{ID: "amount", Value: body.Amount, Label: "Amount"},
+			{ID: "narration", Value: body.Narration, Label: "Narration"},
+			{ID: "ipnUrl", Value: body.CallBackUrl, Label: "Notification URL"},
+			{ID: "shortCode", Value: body.ShortCode, Label: "Short code"},
+			{ID: "businessNumber", Value: body.AccountNumber, Label: "Business number"},
+			{ID: "accountReference", Value: body.AccountNumberRef, Label: "Account Reference"},
 		}
 		body.Request = req
 	}
 	if body.CommandId == models.MerchantToCustomerBankPayment {
-		body.Request = append(body.Request,
-			models.PaymentField{ID: "amount", Value: body.Amount, Label: "Amount"},
-			models.PaymentField{ID: "narration", Value: body.Narration, Label: "Narration"},
-			models.PaymentField{ID: "ipnUrl", Value: body.CallBackUrl, Label: "Notification URL"},
-			models.PaymentField{
-				ID:    "shortCode",
-				Value: body.ShortCode,
-				Label: "Short code",
-			},
-			models.PaymentField{
-				ID:    "accountNumber",
-				Value: body.AccountNumber,
-				Label: "Account number",
-			},
-			models.PaymentField{
-				ID:    "accountName",
-				Value: body.AccountName,
-				Label: "Account name",
-			},
-			models.PaymentField{
-				ID:    "bankCode",
-				Value: body.BankCode,
-				Label: "Bank code",
-			},
-		)
+		req := []models.PaymentField{
+			{ID: "amount", Value: body.Amount, Label: "Amount"},
+			{ID: "narration", Value: body.Narration, Label: "Narration"},
+			{ID: "ipnUrl", Value: body.CallBackUrl, Label: "Notification URL"},
+			{ID: "shortCode", Value: body.ShortCode, Label: "Short code"},
+			{ID: "accountNumber", Value: body.AccountNumber, Label: "Account Number"},
+			{ID: "bankCode", Value: body.BankCode, Label: "Bank code"},
+			{ID: "accountName", Value: body.AccountNumber, Label: "Account Name"},
+		}
+		body.Request = req
+	}
 
+	if body.CommandId == models.MerchantToCustomerMobileMoneyPayment {
+		req := []models.PaymentField{
+			{ID: "amount", Value: body.Amount, Label: "Amount"},
+			{ID: "narration", Value: body.Narration, Label: "Narration"},
+			{ID: "ipnUrl", Value: body.CallBackUrl, Label: "Notification URL"},
+			{ID: "shortCode", Value: body.ShortCode, Label: "Short code"},
+			{ID: "accountNumber", Value: body.AccountNumber, Label: "Account Number"},
+		}
+		body.Request = req
 	}
 	reqBody, err := json.Marshal(body)
 	if err != nil {
@@ -255,7 +227,6 @@ func (t *Tanda) StatusQuery(trackingID string, shortCode string) (*models.Status
 	}
 	// Step 2: Construct the URL using the tracking ID and shortcode provided
 	url := fmt.Sprintf("%s/v3/organizations/%s/request/%s?shortCode=%s", t.baseURL(), t.OrganizationId, trackingID, shortCode)
-
 	headers := map[string]string{
 		"Authorization": "Bearer " + token,
 		"Content-Type":  "application/json",
@@ -291,7 +262,7 @@ func (t *Tanda) StatusQuery(trackingID string, shortCode string) (*models.Status
 	return &statusResp, nil
 }
 
-func (t *Tanda) GetWalletBalances() (string, *models.APIErrorResponse) {
+func (t *Tanda) GetWalletBalances(storeUUid string) (string, *models.APIErrorResponse) {
 	token, err := t.setAccessToken()
 	if err != nil {
 		return "", &models.APIErrorResponse{
@@ -299,14 +270,11 @@ func (t *Tanda) GetWalletBalances() (string, *models.APIErrorResponse) {
 			Error:       err.Error(),
 		}
 	}
-
 	headers := map[string]string{
 		"Authorization": "Bearer " + token,
 		"Content-Type":  "application/json",
 	}
-
-	url := fmt.Sprintf("https://api-v3.tanda.africa/cps/v1/head-offices/%v/stores/%v/wallets", t.OrganizationId, t.ShortCode)
-	url = "https://api-v3.tanda.africa/cps/v1/stores/:storeId/wallets/220429/pending-payments?since=2024-08-29T07%3A00%3A15Z&till=2024-11-29T07%3A00%3A15Z"
+	url := fmt.Sprintf("https://api-v3.tanda.africa/cps/v1/head-offices/%v/stores/%v/wallets", t.OrganizationId, storeUUid)
 	res, err := helpers.NewReq(url, nil, &headers, t.Showlogs)
 	if err != nil {
 		return "", &models.APIErrorResponse{
@@ -324,6 +292,14 @@ func (t *Tanda) GetWalletBalances() (string, *models.APIErrorResponse) {
 			}
 		}
 		return "", &errResponse
+	}
+	var walletsResponse models.WalletsResponse
+	err = json.Unmarshal(res.Body(), &walletsResponse)
+	if err != nil {
+		return "", &models.APIErrorResponse{
+			Description: "Unable to unmarshal response",
+			Error:       err.Error(),
+		}
 	}
 
 	return string(res.Body()), nil
