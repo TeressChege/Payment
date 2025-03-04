@@ -1,14 +1,14 @@
-module github.com/TeressChege/tanda-plugin
+module github.com/TeressChege/payment
 
-go 1.22.8
+go 1.22.12
 
 require (
 	github.com/joho/godotenv v1.5.1
-	github.com/valyala/fasthttp v1.56.0
+	github.com/valyala/fasthttp v1.59.0
 )
 
 require (
-	github.com/andybalholm/brotli v1.1.0 // indirect
-	github.com/klauspost/compress v1.17.9 // indirect
+	github.com/andybalholm/brotli v1.1.1 // indirect
+	github.com/klauspost/compress v1.17.11 // indirect
 	github.com/valyala/bytebufferpool v1.0.0 // indirect
 )
