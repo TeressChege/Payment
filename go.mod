@@ -1,4 +1,4 @@
-module github.com/TeressChege/payment
+module github.com/TeressChege/duka-pay
 
 go 1.22.12
 

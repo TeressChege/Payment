@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/TeressChege/payment"
-	"github.com/TeressChege/payment/models"
+	"github.com/TeressChege/duka-pay"
+	"github.com/TeressChege/duka-pay/models"
 	"github.com/joho/godotenv"
 )
 
