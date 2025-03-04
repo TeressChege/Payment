@@ -6,8 +6,8 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/danchengash/tanda-plugin/helpers"
-	"github.com/danchengash/tanda-plugin/models"
+	"github.com/TeressChege/tanda-plugin/helpers"
+	"github.com/TeressChege/tanda-plugin/models"
 )
 
 type Tanda struct {
@@ -22,7 +22,6 @@ type Tanda struct {
 
 func NewTanda(clientId string, clientSecret string, organizationId string, shortCode string, environment Environment, showLogs bool) *Tanda {
 	var accessToken = models.AccessTokenResponse{}
-
 	return &Tanda{
 		ClientId:       clientId,
 		ClientSecret:   clientSecret,

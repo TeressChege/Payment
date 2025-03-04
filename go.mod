@@ -1,4 +1,4 @@
-module github.com/danchengash/tanda-plugin
+module github.com/TeressChege/tanda-plugin
 
 go 1.22.8
 

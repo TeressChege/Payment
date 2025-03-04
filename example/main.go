@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/danchengash/tanda-plugin"
-	"github.com/danchengash/tanda-plugin/models"
+	"github.com/TeressChege/tanda-plugin"
+	"github.com/TeressChege/tanda-plugin/models"
 	"github.com/joho/godotenv"
 )
 
