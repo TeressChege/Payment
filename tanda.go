@@ -261,10 +261,10 @@ func (t *Tanda) StatusQuery(trackingID string, shortCode string) (*models.Status
 	return &statusResp, nil
 }
 
-func (t *Tanda) GetWalletBalances(storeUUid string) (string, *models.APIErrorResponse) {
+func (t *Tanda) GetWalletBalances(storeUUid string) (*models.WalletsResponse, *models.APIErrorResponse) {
 	token, err := t.setAccessToken()
 	if err != nil {
-		return "", &models.APIErrorResponse{
+		return nil, &models.APIErrorResponse{
 			Description: err.Error(),
 			Error:       err.Error(),
 		}
@@ -276,7 +276,7 @@ func (t *Tanda) GetWalletBalances(storeUUid string) (string, *models.APIErrorRes
 	url := fmt.Sprintf("https://api-v3.tanda.africa/cps/v1/head-offices/%v/stores/%v/wallets", t.OrganizationId, storeUUid)
 	res, err := helpers.NewReq(url, nil, &headers, t.Showlogs)
 	if err != nil {
-		return "", &models.APIErrorResponse{
+		return nil, &models.APIErrorResponse{
 			Description: err.Error(),
 			Error:       err.Error(),
 		}
@@ -285,21 +285,21 @@ func (t *Tanda) GetWalletBalances(storeUUid string) (string, *models.APIErrorRes
 	if res.StatusCode() != 200 {
 		errResponse, err := models.UnmarshalAPIErrorResponse(res.Body())
 		if err != nil {
-			return "", &models.APIErrorResponse{
+			return nil, &models.APIErrorResponse{
 				Description: "Unable to unmarshal api response",
 				Error:       err.Error(),
 			}
 		}
-		return "", &errResponse
+		return nil, &errResponse
 	}
 	var walletsResponse models.WalletsResponse
 	err = json.Unmarshal(res.Body(), &walletsResponse)
 	if err != nil {
-		return "", &models.APIErrorResponse{
+		return nil, &models.APIErrorResponse{
 			Description: "Unable to unmarshal response",
 			Error:       err.Error(),
 		}
 	}
 
-	return string(res.Body()), nil
+	return &walletsResponse, nil
 }
