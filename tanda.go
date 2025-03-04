@@ -6,8 +6,8 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/TeressChege/duka-pay/helpers"
-	"github.com/TeressChege/duka-pay/models"
+	"github.com/TeressChege/payment/helpers"
+	"github.com/TeressChege/payment/models"
 )
 
 type Tanda struct {
