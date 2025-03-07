@@ -45,7 +45,7 @@ func (t *Tanda) setAccessToken() (string, error) {
 		"Content-Type": "application/x-www-form-urlencoded",
 	}
 
-	res, err := helpers.NewReq(url, &payload, &headers, true)
+	res, err := helpers.NewReq(url, &payload, &headers, t.Showlogs)
 	if err != nil {
 		return "", err
 	}
